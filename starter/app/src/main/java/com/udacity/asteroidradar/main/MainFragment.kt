@@ -43,12 +43,15 @@ class MainFragment : Fragment() {
 
         viewModel.properties.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, "test - " + it.url, Toast.LENGTH_SHORT).show()
-            Picasso.get().load(it.url).into(binding.activityMainImageOfTheDay)
+            Picasso.get().load(it.url).into(binding.imageViewImageOfTheDay)
         })
 
         viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
             val jsonObject = JSONObject(it)
             var asteroidList : ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
+            val adapter = AsteroidAdapter()
+            binding.recyclerViewAsteroidList.adapter = adapter
+            adapter.submitList(asteroidList)
         })
     }
 
