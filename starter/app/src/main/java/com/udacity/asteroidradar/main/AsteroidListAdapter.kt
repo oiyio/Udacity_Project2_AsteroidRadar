@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.R
 
-class AsteroidAdapter : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(DiffCallback()) {
+class AsteroidAdapter(val onClick: (Asteroid) -> Unit) : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(DiffCallback()) {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textViewName: TextView = itemView.findViewById<View>(R.id.textViewName) as TextView
         var textViewDate: TextView = itemView.findViewById<View>(R.id.textViewDate) as TextView
         var imageViewHazardous : ImageView = itemView.findViewById(R.id.imageViewHazardous)
@@ -28,7 +28,7 @@ class AsteroidAdapter : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(DiffCa
                 imageViewHazardous.setImageResource(R.drawable.ic_status_normal)
 
             itemView.setOnClickListener {
-
+                onClick(item)
             }
         }
     }

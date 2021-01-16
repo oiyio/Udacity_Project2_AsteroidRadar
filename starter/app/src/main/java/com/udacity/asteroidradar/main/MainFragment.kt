@@ -6,11 +6,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
+import com.udacity.asteroidradar.detail.DetailFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.json.JSONObject
 
@@ -48,8 +52,10 @@ class MainFragment : Fragment() {
 
         viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
             val jsonObject = JSONObject(it)
-            var asteroidList : ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
-            val adapter = AsteroidAdapter()
+            val asteroidList : ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
+            val adapter = AsteroidAdapter{
+                view.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+            }
             binding.recyclerViewAsteroidList.adapter = adapter
             adapter.submitList(asteroidList)
         })
