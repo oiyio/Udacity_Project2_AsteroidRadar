@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
+import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*
+import org.json.JSONObject
 
 class MainFragment : Fragment() {
 
@@ -41,6 +44,11 @@ class MainFragment : Fragment() {
         viewModel.properties.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, "test - " + it.url, Toast.LENGTH_SHORT).show()
             Picasso.get().load(it.url).into(binding.activityMainImageOfTheDay)
+        })
+
+        viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
+            val jsonObject = JSONObject(it)
+            var asteroidList : ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
         })
     }
 

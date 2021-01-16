@@ -15,8 +15,14 @@ class MainViewModel : ViewModel() {
     val properties: LiveData<ImageOfTheDay>
         get() = _properties
 
+    private val _asteroidList = MutableLiveData<String>()
+
+    val asteroidList: LiveData<String>
+        get() = _asteroidList
+
     init {
         getImageOfTheDay()
+        getAsteroidList()
     }
 
     fun getImageOfTheDay() {
@@ -27,6 +33,16 @@ class MainViewModel : ViewModel() {
                 Log.d("omertest", "getImageOfTheDay: 123 + $e")
             }
         }
+    }
 
+    fun getAsteroidList(){
+        viewModelScope.launch{
+            try {
+                _asteroidList.value = AsteroidApi.RETROFIT_SERVICE.getNearAsteroidList()
+            }
+            catch (e: Exception){
+                Log.d("omertest", "getAsteroidList: 123 + $e")
+            }
+        }
     }
 }
