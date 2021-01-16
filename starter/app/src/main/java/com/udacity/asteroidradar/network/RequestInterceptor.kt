@@ -8,7 +8,7 @@ internal class RequestInterceptor : Interceptor {
     val originalRequest = chain.request()
     val originalUrl = originalRequest.url
     val url = originalUrl.newBuilder()
-     /* .addQueryParameter("api_key", API_KEY)*/
+      .addQueryParameter("api_key", API_KEY)
       .build()
 
     val requestBuilder = originalRequest.newBuilder().url(url)
