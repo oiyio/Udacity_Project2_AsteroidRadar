@@ -30,8 +30,9 @@ private val retrofit = Retrofit.Builder()
 interface AsteroidApiService {
 
     @GET("planetary/apod")
-    suspend fun getProperties(): ImageOfTheDay
+    suspend fun getImageOfTheDay(): ImageOfTheDay
 
+    /*suspend fun getNearAsteroidList()*/
    /* * https://api.nasa.gov/planetary/apod?api_key=XuPUs0qRudQjLk2Zbr1t21n766Sbl1SmnCP1aZBH
     *
 

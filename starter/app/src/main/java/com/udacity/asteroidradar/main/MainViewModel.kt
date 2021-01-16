@@ -22,7 +22,7 @@ class MainViewModel : ViewModel() {
     fun getImageOfTheDay() {
         viewModelScope.launch {
             try {
-                _properties.value = AsteroidApi.RETROFIT_SERVICE.getProperties()
+                _properties.value = AsteroidApi.RETROFIT_SERVICE.getImageOfTheDay()
             } catch (e: Exception) {
                 Log.d("omertest", "getImageOfTheDay: 123 + $e")
             }
