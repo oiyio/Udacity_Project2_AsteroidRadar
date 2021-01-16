@@ -19,13 +19,13 @@ private val moshi = Moshi.Builder()
     .build()
 
 private val okHttpClient = OkHttpClient.Builder()
-    /*.addInterceptor(RequestInterceptor())*/
+    .addInterceptor(RequestInterceptor())
     .build()
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
-    /*.client(okHttpClient)*/
+    .client(okHttpClient)
     .build()
 
 
