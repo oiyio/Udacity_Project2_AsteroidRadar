@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="asteroid"
+            type="com.udacity.asteroidradar.domain.Asteroid" />
+
+        <variable
+            name="asteroidClickListener"
+            type="com.udacity.asteroidradar.main.AsteroidClickListener" />
+    </data>
 
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="TextView 1" />
+        android:onClick="@{() -> asteroidClickListener.onClick(asteroid)}">
 
-    <TextView
-        android:id="@+id/textViewDate"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="TextView 2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewName"
-        tools:layout_editor_absoluteX="78dp" />
+        <TextView
+            android:id="@+id/textViewName"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{asteroid.codename}"
+            tools:text="TextView 1" />
 
-    <ImageView
-        android:id="@+id/imageViewHazardous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_status_normal"
-        android:contentDescription="@string/content_description_imageView_asteroid_item" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewDate"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{asteroid.closeApproachDate}"
+            tools:text="TextView 2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            tools:layout_editor_absoluteX="78dp" />
+
+        <ImageView
+            android:id="@+id/imageViewHazardous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:statusIcon="@{asteroid.isPotentiallyHazardous}"
+            tools:srcCompat="@drawable/ic_status_normal"
+            android:contentDescription="@string/content_description_imageView_asteroid_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
