@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.udacity.asteroidradar.main.ImageOfTheDay
+import com.udacity.asteroidradar.domain.ImageOfTheDay
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -10,8 +10,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
 private const val BASE_URL = "https://api.nasa.gov/"
-enum class MarsApiFilter(val value: String) { SHOW_RENT("rent"), SHOW_BUY("buy"), SHOW_ALL("all") }
-
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())

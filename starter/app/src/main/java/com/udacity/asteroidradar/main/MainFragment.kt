@@ -40,9 +40,10 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.properties.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, "test - " + it.url, Toast.LENGTH_SHORT).show()
-            Picasso.get().load(it.url).into(binding.imageViewImageOfTheDay)
+        viewModel.imageOfTheDay.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Picasso.get().load(it.url).into(binding.imageViewImageOfTheDay)
+            }
         })
 
         val adapter = AsteroidAdapter{
@@ -51,7 +52,9 @@ class MainFragment : Fragment() {
         binding.recyclerViewAsteroidList.adapter = adapter
 
         viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+            it?.let {
+                adapter.submitList(it)
+            }
         })
     }
 

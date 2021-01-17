@@ -1,4 +1,4 @@
-package com.udacity.asteroidradar.main
+package com.udacity.asteroidradar.domain
 
 data class ImageOfTheDay(
     val date: String,

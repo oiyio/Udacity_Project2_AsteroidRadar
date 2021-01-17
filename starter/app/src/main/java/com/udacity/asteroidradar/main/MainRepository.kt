@@ -5,8 +5,9 @@ import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
-import com.udacity.asteroidradar.database.asDatabaseModel
-import com.udacity.asteroidradar.database.asDomainModel
+import com.udacity.asteroidradar.database.entity.asDatabaseModel
+import com.udacity.asteroidradar.database.entity.asDomainModel
+import com.udacity.asteroidradar.domain.ImageOfTheDay
 import com.udacity.asteroidradar.network.AsteroidApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +17,12 @@ class MainRepository(private val database: AsteroidDatabase) {
 
     val asteroidList: LiveData<List<Asteroid>> =
         Transformations.map(database.asteroidDao.getAsteroids()) {
-            it.asDomainModel()
+            it?.asDomainModel()
+        }
+
+    val imageOfTheDay: LiveData<ImageOfTheDay> =
+        Transformations.map(database.asteroidDao.getImageOfTheDay()) {
+            it?.asDomainModel()
         }
 
     suspend fun refreshAsteroidList() {
@@ -28,6 +34,13 @@ class MainRepository(private val database: AsteroidDatabase) {
             list.forEach {
                 database.asteroidDao.insertAll(it)
             }
+        }
+    }
+
+    suspend fun refreshImageOfTheDay() {
+        withContext(Dispatchers.IO) {
+            val image = AsteroidApi.RETROFIT_SERVICE.getImageOfTheDay()
+            database.asteroidDao.insert(imageOfTheDay = image.asDatabaseModel())
         }
     }
 }
