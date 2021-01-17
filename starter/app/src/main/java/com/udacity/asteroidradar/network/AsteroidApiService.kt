@@ -34,7 +34,7 @@ interface AsteroidApiService {
     @GET("planetary/apod")
     suspend fun getImageOfTheDay(): ImageOfTheDay
 
-    @GET("neo/rest/v1/feed?start_date=2021-01-16")
+    @GET("neo/rest/v1/feed?start_date=2021-01-17")
     suspend fun getNearAsteroidList() : String
    /* * https://api.nasa.gov/planetary/apod?api_key=XuPUs0qRudQjLk2Zbr1t21n766Sbl1SmnCP1aZBH
     *

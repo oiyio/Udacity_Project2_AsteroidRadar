@@ -40,24 +40,18 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*
-        https://api.nasa.gov/planetary/apod?api_key=XuPUs0qRudQjLk2Zbr1t21n766Sbl1SmnCP1aZBH
-        https://apod.nasa.gov/apod/image/2101/Pluto-Mountains-Plains9-17-15_1024.jpg
-        * */
-
         viewModel.properties.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, "test - " + it.url, Toast.LENGTH_SHORT).show()
             Picasso.get().load(it.url).into(binding.imageViewImageOfTheDay)
         })
 
+        val adapter = AsteroidAdapter{
+            view.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+        }
+        binding.recyclerViewAsteroidList.adapter = adapter
+
         viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
-            val jsonObject = JSONObject(it)
-            val asteroidList : ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
-            val adapter = AsteroidAdapter{
-                view.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-            }
-            binding.recyclerViewAsteroidList.adapter = adapter
-            adapter.submitList(asteroidList)
+            adapter.submitList(it)
         })
     }
 
