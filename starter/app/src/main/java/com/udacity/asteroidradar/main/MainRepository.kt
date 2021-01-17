@@ -1,5 +1,7 @@
 package com.udacity.asteroidradar.main
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
@@ -27,20 +29,31 @@ class MainRepository(private val database: AsteroidDatabase) {
 
     suspend fun refreshAsteroidList() {
         withContext(Dispatchers.IO) {
-            val str = AsteroidApi.RETROFIT_SERVICE.getNearAsteroidList()
-            val jsonObject = JSONObject(str)
-            val asteroidList: ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
-            val list = asteroidList.asDatabaseModel()
-            list.forEach {
-                database.asteroidDao.insertAll(it)
+            try {
+                val str = AsteroidApi.RETROFIT_SERVICE.getNearAsteroidList()
+                val jsonObject = JSONObject(str)
+                val asteroidList: ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
+                val list = asteroidList.asDatabaseModel()
+                list.forEach {
+                    database.asteroidDao.insertAll(it)
+                }
             }
+            catch (e : java.lang.Exception){
+                Log.d("omertest", "refreshAsteroidList: $e")
+            }
+
         }
     }
 
     suspend fun refreshImageOfTheDay() {
         withContext(Dispatchers.IO) {
-            val image = AsteroidApi.RETROFIT_SERVICE.getImageOfTheDay()
-            database.asteroidDao.insert(imageOfTheDay = image.asDatabaseModel())
+            try {
+                val image = AsteroidApi.RETROFIT_SERVICE.getImageOfTheDay()
+                database.asteroidDao.insert(imageOfTheDay = image.asDatabaseModel())
+            }
+            catch (e : Exception){
+                Log.d("omertest", "refreshImageOfTheDay: $e")
+            }
         }
     }
 }
