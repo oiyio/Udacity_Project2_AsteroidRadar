@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.udacity.asteroidradar.domain.ImageOfTheDay
+import com.udacity.asteroidradar.domain.PictureOfDay
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -30,7 +30,7 @@ private val retrofit = Retrofit.Builder()
 interface AsteroidApiService {
 
     @GET("planetary/apod")
-    suspend fun getImageOfTheDay(): ImageOfTheDay
+    suspend fun getPictureOfDay(): PictureOfDay
 
     @GET("neo/rest/v1/feed?start_date=2021-01-17")
     suspend fun getNearAsteroidList() : String

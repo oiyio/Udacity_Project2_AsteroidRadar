@@ -3,12 +3,12 @@ package com.udacity.asteroidradar.main
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.util.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.entity.asDatabaseModel
 import com.udacity.asteroidradar.database.entity.asDomainModel
-import com.udacity.asteroidradar.domain.ImageOfTheDay
+import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.network.AsteroidApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,8 +21,8 @@ class MainRepository(private val database: AsteroidDatabase) {
             it?.asDomainModel()
         }
 
-    val imageOfTheDay: LiveData<ImageOfTheDay> =
-        Transformations.map(database.asteroidDao.getImageOfTheDay()) {
+    val pictureOfDay: LiveData<PictureOfDay> =
+        Transformations.map(database.asteroidDao.getPictureOfDay()) {
             it?.asDomainModel()
         }
 
@@ -44,14 +44,14 @@ class MainRepository(private val database: AsteroidDatabase) {
         }
     }
 
-    suspend fun refreshImageOfTheDay() {
+    suspend fun refreshPictureOfDay() {
         withContext(Dispatchers.IO) {
             try {
-                val image = AsteroidApi.RETROFIT_SERVICE.getImageOfTheDay()
-                database.asteroidDao.insert(imageOfTheDay = image.asDatabaseModel())
+                val image = AsteroidApi.RETROFIT_SERVICE.getPictureOfDay()
+                database.asteroidDao.insert(pictureOfDay = image.asDatabaseModel())
             }
             catch (e : Exception){
-                Log.d("omertest", "refreshImageOfTheDay: $e")
+                Log.d("omertest", "refreshPictureOfDay: $e")
             }
         }
     }

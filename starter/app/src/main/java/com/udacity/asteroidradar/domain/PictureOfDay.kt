@@ -1,10 +1,12 @@
 package com.udacity.asteroidradar.domain
 
-data class ImageOfTheDay(
+import com.squareup.moshi.Json
+
+data class PictureOfDay(
     val date: String,
     val explanation: String,
     val hdurl: String,
-    val media_type: String,
+    @Json(name = "media_type") val mediaType: String,
     val service_version: String,
     val title: String,
     val url: String

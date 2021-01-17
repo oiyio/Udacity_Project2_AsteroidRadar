@@ -12,12 +12,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch{
-            mainRepository.refreshImageOfTheDay()
+            mainRepository.refreshPictureOfDay()
             mainRepository.refreshAsteroidList()
         }
     }
 
     val asteroidList = mainRepository.asteroidList
 
-    val imageOfTheDay = mainRepository.imageOfTheDay
+    val pictureOfDay = mainRepository.pictureOfDay
 }

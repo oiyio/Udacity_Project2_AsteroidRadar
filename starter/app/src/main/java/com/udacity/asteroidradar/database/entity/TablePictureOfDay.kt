@@ -2,10 +2,10 @@ package com.udacity.asteroidradar.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.udacity.asteroidradar.domain.ImageOfTheDay
+import com.udacity.asteroidradar.domain.PictureOfDay
 
 @Entity
-data class TableImageOfTheDay(
+data class TablePictureOfDay(
     @PrimaryKey val id: Int = 0,
     val date: String,
     val explanation: String,
@@ -16,12 +16,12 @@ data class TableImageOfTheDay(
     val url: String
 )
 
-fun TableImageOfTheDay.asDomainModel(): ImageOfTheDay {
-    return ImageOfTheDay(
+fun TablePictureOfDay.asDomainModel(): PictureOfDay {
+    return PictureOfDay(
         date = this.date,
         explanation = this.explanation,
         hdurl = this.hdurl,
-        media_type = this.media_type,
+        mediaType = this.media_type,
         service_version = this.service_version,
         title = this.title,
         url = this.url
@@ -29,12 +29,12 @@ fun TableImageOfTheDay.asDomainModel(): ImageOfTheDay {
 }
 
 
-fun ImageOfTheDay.asDatabaseModel(): TableImageOfTheDay {
-    return TableImageOfTheDay(
+fun PictureOfDay.asDatabaseModel(): TablePictureOfDay {
+    return TablePictureOfDay(
         date = this.date,
         explanation = this.explanation,
         hdurl = this.hdurl,
-        media_type = this.media_type,
+        media_type = this.mediaType,
         service_version = this.service_version,
         title = this.title,
         url = this.url

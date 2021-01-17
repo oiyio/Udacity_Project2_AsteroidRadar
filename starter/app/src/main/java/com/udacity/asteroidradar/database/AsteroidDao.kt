@@ -3,7 +3,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.udacity.asteroidradar.database.entity.TableAsteroid
-import com.udacity.asteroidradar.database.entity.TableImageOfTheDay
+import com.udacity.asteroidradar.database.entity.TablePictureOfDay
 
 @Dao
 interface AsteroidDao {
@@ -13,14 +13,14 @@ interface AsteroidDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroids: TableAsteroid)
 
-    @Query("select * from TableImageOfTheDay order by date desc limit 1")
-    fun getImageOfTheDay(): LiveData<TableImageOfTheDay>
+    @Query("select * from TablePictureOfDay order by date desc limit 1")
+    fun getPictureOfDay(): LiveData<TablePictureOfDay>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(imageOfTheDay: TableImageOfTheDay)
+    fun insert(pictureOfDay: TablePictureOfDay)
 }
 
-@Database(entities = [TableAsteroid::class, TableImageOfTheDay::class], version = 1)
+@Database(entities = [TableAsteroid::class, TablePictureOfDay::class], version = 1)
 abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
 }

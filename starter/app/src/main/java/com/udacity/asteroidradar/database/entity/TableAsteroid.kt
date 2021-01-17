@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.domain.Asteroid
 
 @Entity
 data class TableAsteroid(@PrimaryKey val id: Long, val codename: String, val closeApproachDate: String,
@@ -13,7 +13,8 @@ data class TableAsteroid(@PrimaryKey val id: Long, val codename: String, val clo
 
 fun List<TableAsteroid>.asDomainModel(): List<Asteroid> {
     return map {
-        Asteroid(id = it.id,
+        Asteroid(
+            id = it.id,
             codename = it.codename,
             closeApproachDate = it.closeApproachDate,
             absoluteMagnitude = it.absoluteMagnitude,
