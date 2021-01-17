@@ -34,12 +34,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.pictureOfDay.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                Picasso.get().load(it.url).into(binding.imageViewPictureOfDay)
-            }
-        })
-
         val adapter = AsteroidAdapter(AsteroidClickListener {
             view.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
         })
