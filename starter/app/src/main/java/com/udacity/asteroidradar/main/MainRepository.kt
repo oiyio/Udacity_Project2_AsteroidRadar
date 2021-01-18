@@ -35,6 +35,10 @@ class MainRepository(private val database: AsteroidDatabase) {
         return database.asteroidDao.getAllSavedAsteroids()
     }
 
+    suspend fun deletePastAsteroids() {
+        return database.asteroidDao.delete(getDateToday())
+    }
+
     suspend fun refreshAsteroidList() {
         withContext(Dispatchers.IO) {
             try {

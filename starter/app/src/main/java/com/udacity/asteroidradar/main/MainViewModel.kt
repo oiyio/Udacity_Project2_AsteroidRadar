@@ -29,7 +29,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val pictureOfDay = mainRepository.pictureOfDay
 
     /*
-    * Get only today and future asteroids
+    * Get only today and future asteroids from db
     * */
     fun getAsteroidList() {
         viewModelScope.launch {
@@ -39,7 +39,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /*
-    * Get only today asteroids
+    * Get only today asteroids from db
     * */
     fun getAsteroidsOfToday() {
         viewModelScope.launch {
@@ -49,7 +49,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /*
-    * Get all asteroids including past days
+    * Get all asteroids including past days from db
     * */
     fun getAllSavedAsteroids() {
         viewModelScope.launch {
