@@ -6,30 +6,35 @@ import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.util.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
+import com.udacity.asteroidradar.database.entity.TableAsteroid
 import com.udacity.asteroidradar.database.entity.asDatabaseModel
 import com.udacity.asteroidradar.database.entity.asDomainModel
 import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.network.AsteroidApi
+import com.udacity.asteroidradar.util.getDateToday
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 class MainRepository(private val database: AsteroidDatabase) {
 
-    val asteroidList: LiveData<List<Asteroid>> =
-        Transformations.map(database.asteroidDao.getAsteroids()) {
-            it?.asDomainModel()
-        }
-
     val pictureOfDay: LiveData<PictureOfDay> =
         Transformations.map(database.asteroidDao.getPictureOfDay()) {
             it?.asDomainModel()
         }
 
+    suspend fun getAsteroidList() : List<TableAsteroid>{
+        return database.asteroidDao.getAsteroids()
+    }
+
+    suspend fun getAsteroidsByDate(date: String) : List<TableAsteroid> {
+        return database.asteroidDao.getAsteroidsByDate(date)
+    }
+
     suspend fun refreshAsteroidList() {
         withContext(Dispatchers.IO) {
             try {
-                val str = AsteroidApi.RETROFIT_SERVICE.getNearAsteroidList()
+                val str = AsteroidApi.RETROFIT_SERVICE.getNearAsteroidList(getDateToday())
                 val jsonObject = JSONObject(str)
                 val asteroidList: ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
                 val list = asteroidList.asDatabaseModel()
@@ -40,7 +45,6 @@ class MainRepository(private val database: AsteroidDatabase) {
             catch (e : java.lang.Exception){
                 Log.d("omertest", "refreshAsteroidList: $e")
             }
-
         }
     }
 

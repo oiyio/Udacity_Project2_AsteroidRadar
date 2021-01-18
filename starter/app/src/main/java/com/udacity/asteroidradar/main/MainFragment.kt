@@ -1,13 +1,14 @@
 package com.udacity.asteroidradar.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.database.entity.asDomainModel
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -42,7 +43,7 @@ class MainFragment : Fragment() {
 
         viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                adapter.submitList(it.asDomainModel())
             }
         })
     }
@@ -53,6 +54,19 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.show_week_menu -> {
+                return true
+            }
+            R.id.show_today_menu -> {
+                viewModel.getAsteroidsOfToday()
+                return true
+            }
+            R.id.show_saved_menu -> {
+                viewModel.getAsteroidList()
+                return true
+            }
+        }
         return true
     }
 }
