@@ -18,7 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> asteroidClickListener.onClick(asteroid)}">
+        android:onClick="@{() -> asteroidClickListener.onClick(asteroid)}"
+        android:padding="@dimen/smallMargin">
 
         <TextView
             android:id="@+id/textViewName"
@@ -28,6 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{asteroid.codename}"
+            android:layout_marginBottom="@dimen/smallMargin"
             tools:text="TextView 1" />
 
         <TextView
