@@ -56,6 +56,7 @@ class MainFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.show_week_menu -> {
+                viewModel.getAsteroidList()
                 return true
             }
             R.id.show_today_menu -> {
@@ -63,7 +64,7 @@ class MainFragment : Fragment() {
                 return true
             }
             R.id.show_saved_menu -> {
-                viewModel.getAsteroidList()
+                viewModel.getAllSavedAsteroids()
                 return true
             }
         }

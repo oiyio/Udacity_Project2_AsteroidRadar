@@ -18,7 +18,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val asteroidList = MutableLiveData<List<TableAsteroid>>()
 
     init {
-        viewModelScope.launch{
+        viewModelScope.launch {
             mainRepository.refreshPictureOfDay()
             mainRepository.refreshAsteroidList()
         }
@@ -28,16 +28,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val pictureOfDay = mainRepository.pictureOfDay
 
-    fun getAsteroidList(){
-        viewModelScope.launch{
-            val myList =  mainRepository.getAsteroidList()
+    /*
+    * Get only today and future asteroids
+    * */
+    fun getAsteroidList() {
+        viewModelScope.launch {
+            val myList = mainRepository.getAsteroidList(getDateToday())
             asteroidList.value = myList
         }
     }
 
-    fun getAsteroidsOfToday(){
-        viewModelScope.launch{
+    /*
+    * Get only today asteroids
+    * */
+    fun getAsteroidsOfToday() {
+        viewModelScope.launch {
             val myList = mainRepository.getAsteroidsByDate(getDateToday())
+            asteroidList.value = myList
+        }
+    }
+
+    /*
+    * Get all asteroids including past days
+    * */
+    fun getAllSavedAsteroids() {
+        viewModelScope.launch {
+            val myList = mainRepository.getAllSavedAsteroids()
             asteroidList.value = myList
         }
     }

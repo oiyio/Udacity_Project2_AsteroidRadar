@@ -23,12 +23,16 @@ class MainRepository(private val database: AsteroidDatabase) {
             it?.asDomainModel()
         }
 
-    suspend fun getAsteroidList() : List<TableAsteroid>{
-        return database.asteroidDao.getAsteroids()
+    suspend fun getAsteroidList(today: String) : List<TableAsteroid>{
+        return database.asteroidDao.getAsteroids(today)
     }
 
     suspend fun getAsteroidsByDate(date: String) : List<TableAsteroid> {
         return database.asteroidDao.getAsteroidsByDate(date)
+    }
+
+    suspend fun getAllSavedAsteroids(): List<TableAsteroid> {
+        return database.asteroidDao.getAllSavedAsteroids()
     }
 
     suspend fun refreshAsteroidList() {
