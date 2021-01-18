@@ -21,4 +21,6 @@
     <string name="nasa_picture_of_day_content_description_format">NASA\'s picture of day: %s</string>
     <string name="content_description_imageView_asteroid_item">An asteroid image from the near asteroid list</string>
     <string name="imageViewPictureOfDay">picture of day</string>
+    <string name="hazardousAsteroidImage">image for hazardous asteroid</string>
+    <string name="safeAsteroidImage">image for safe asteroid</string>
 </resources>

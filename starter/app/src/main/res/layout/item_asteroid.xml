@@ -50,6 +50,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:statusIcon="@{asteroid.isPotentiallyHazardous}"
             tools:srcCompat="@drawable/ic_status_normal"
-            android:contentDescription="@string/content_description_imageView_asteroid_item" />
+            android:contentDescription="@{ `Image of asteroid with codename ` + asteroid.codename}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
