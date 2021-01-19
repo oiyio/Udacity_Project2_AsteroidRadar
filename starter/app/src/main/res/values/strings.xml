@@ -23,4 +23,5 @@
     <string name="imageViewPictureOfDay">picture of day</string>
     <string name="hazardousAsteroidImage">image for hazardous asteroid</string>
     <string name="safeAsteroidImage">image for safe asteroid</string>
+    <string name="contentDescriptionbuttonHelp">Help Button</string>
 </resources>
