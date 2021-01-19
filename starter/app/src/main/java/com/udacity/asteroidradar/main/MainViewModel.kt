@@ -1,21 +1,17 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.udacity.asteroidradar.database.entity.TableAsteroid
 import com.udacity.asteroidradar.database.getDatabase
+import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.util.getDateToday
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
     private val mainRepository = MainRepository(database)
-
-    val asteroidList = MutableLiveData<List<TableAsteroid>>()
+    val filterType = MutableLiveData<FilterType>()
 
     init {
         viewModelScope.launch {
@@ -23,38 +19,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             mainRepository.refreshAsteroidList()
         }
 
-        getAsteroidList()
+        filterType.value = FilterType.AsteroidsStartingFromToday
     }
 
     val pictureOfDay = mainRepository.pictureOfDay
 
-    /*
-    * Get only today and future asteroids from db
-    * */
-    fun getAsteroidList() {
-        viewModelScope.launch {
-            val myList = mainRepository.getAsteroidList(getDateToday())
-            asteroidList.value = myList
+    val asteroidListLiveData: LiveData<List<Asteroid>> = Transformations.switchMap(
+        filterType
+    ) {
+        it?.let {
+            when (it) {
+                FilterType.AllSavedAsteroids -> {
+                    mainRepository.getAllSavedAsteroids()
+                }
+                FilterType.AsteroidsOfToday -> {
+                    mainRepository.getAsteroidsOfToday(getDateToday()) // today
+                }
+                else -> {
+                    mainRepository.getAsteroids(getDateToday())
+                }
+            }
         }
     }
+}
 
-    /*
-    * Get only today asteroids from db
-    * */
-    fun getAsteroidsOfToday() {
-        viewModelScope.launch {
-            val myList = mainRepository.getAsteroidsByDate(getDateToday())
-            asteroidList.value = myList
-        }
-    }
+sealed class FilterType {
+    object AllSavedAsteroids : FilterType()
+    object AsteroidsOfToday : FilterType()
+    object AsteroidsStartingFromToday : FilterType()
 
-    /*
-    * Get all asteroids including past days from db
-    * */
-    fun getAllSavedAsteroids() {
-        viewModelScope.launch {
-            val myList = mainRepository.getAllSavedAsteroids()
-            asteroidList.value = myList
-        }
-    }
 }
