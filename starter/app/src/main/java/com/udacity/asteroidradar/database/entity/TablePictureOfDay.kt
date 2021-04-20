@@ -9,7 +9,6 @@ data class TablePictureOfDay(
     @PrimaryKey val id: Int = 0,
     val date: String,
     val explanation: String,
-    val hdurl: String,
     val media_type: String,
     val service_version: String,
     val title: String,
@@ -20,7 +19,6 @@ fun TablePictureOfDay.asDomainModel(): PictureOfDay {
     return PictureOfDay(
         date = this.date,
         explanation = this.explanation,
-        hdurl = this.hdurl,
         mediaType = this.media_type,
         service_version = this.service_version,
         title = this.title,
@@ -33,7 +31,6 @@ fun PictureOfDay.asDatabaseModel(): TablePictureOfDay {
     return TablePictureOfDay(
         date = this.date,
         explanation = this.explanation,
-        hdurl = this.hdurl,
         media_type = this.mediaType,
         service_version = this.service_version,
         title = this.title,
